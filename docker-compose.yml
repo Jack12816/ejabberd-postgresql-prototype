@@ -1,0 +1,24 @@
+version: "3"
+services:
+  db:
+    image: hausgold/postgres:9.6
+    network_mode: bridge
+    ports: ["5432"]
+    volumes:
+      - ./migrations:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_DB: ejabberd
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      MDNS_HOSTNAME: db.local
+
+  jabber:
+    image: hausgold/ejabberd:dev
+    network_mode: bridge
+    ports: ["4560", "5222", "5269", "5280", "5443"]
+    volumes:
+      - ./configs/ejabberd.yml:/etc/ejabberd/ejabberd.yml
+    links:
+      - db
+    environment:
+      MDNS_HOSTNAME: jabber.local
