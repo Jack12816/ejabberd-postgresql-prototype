@@ -13,7 +13,7 @@ services:
       MDNS_HOSTNAME: db.local
 
   jabber:
-    image: hausgold/ejabberd:dev
+    image: hausgold/ejabberd:17.11
     network_mode: bridge
     ports: ["4560", "5222", "5269", "5280", "5443"]
     volumes:
